@@ -5,8 +5,8 @@ BIN_DIR := bin
 SRC_DIR := src
 OBJ_DIR := obj
 LIB_DIR := lib
-# C Stuff
 
+# C Stuff
 override CFLAGS := -Wall -Wextra -I$(SRC_DIR) -I$(LIB_DIR) -std=c17 -g
 
 # Sources

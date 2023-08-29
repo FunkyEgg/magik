@@ -29,6 +29,10 @@ typedef struct {
         struct Project {
             toml_datum_t name;
             toml_datum_t ver;
+
+            toml_datum_t src_dir;
+            toml_datum_t obr_dir;
+            toml_datum_t bin_dir;
         } project;
     } data;
 } MagikConfig;

@@ -3,3 +3,6 @@ spec = 0
 [project]
 name = "magik"
 version = "0.1.0"
+src = "src"
+obj = "obj"
+bin = "bin"
