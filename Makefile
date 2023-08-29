@@ -7,7 +7,6 @@ OBJ_DIR := obj
 LIB_DIR := lib
 # C Stuff
 
-override CC := zig cc
 override CFLAGS := -Wall -Wextra -I$(SRC_DIR) -I$(LIB_DIR) -std=c17 -g
 
 # Sources
