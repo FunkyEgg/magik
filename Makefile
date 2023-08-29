@@ -16,7 +16,12 @@ HEADERS := $(call rwildcard, $(SRC_DIR), *.h)
 
 # Outputs
 OBJECTS := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SOURCES))
-OUTPUT_BIN := $(BIN_DIR)/magik.exe
+
+ifeq ($(OS),Windows_NT)
+	OUTPUT_BIN := $(BIN_DIR)/magik.exe
+else
+	OUTPUT_BIN := $(BIN_DIR)/magik
+endif
 
 # TomlC99
 TOMLC99 := tomlc99
