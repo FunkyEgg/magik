@@ -41,7 +41,7 @@ int main (void) {
     error = createConfig(strcat(cwd_buf, "/magik.toml"), config);
     if (error != MGK_SUCCESS) {
         printf("Error %i: %s\n", error, getErrorDescFromCode(error));
-        exit(error);
+        return error;
     }
 
     freeConfig(config);

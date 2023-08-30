@@ -17,6 +17,9 @@
 #ifndef MAGIK_MGKERROR_H
 #define MAGIK_MGKERROR_H
 
+/**
+ * @brief Enum that defines all errors magik could return
+ */
 typedef enum {
     MGK_SUCCESS = 0,
     MGK_NO_BUILD_FILE,
@@ -25,6 +28,12 @@ typedef enum {
     MGK_UNABLE_TO_PARSE_TOML_DATA
 } MagikError;
 
+/**
+ * @brief Get the error description from a given error code
+ * 
+ * @param code The error code
+ * @return A string error description
+ */
 char* getErrorDescFromCode(int code);
 
 #endif

@@ -18,11 +18,11 @@
 
 char* getErrorDescFromCode(int code) {
     switch (code) {
-    case MGK_SUCCESS: return "No error";
-    case MGK_NO_BUILD_FILE: return "Unable to find magik.toml in current directory";
-    case MGK_UNABLE_TO_PARSE_CONFIG: return "Unable to parse magik.toml";
-    case MGK_UNSUPPORTED_SPEC_VERSION: return "Unsupported magik specification version, valid versions are: 0";
-    case MGK_UNABLE_TO_PARSE_TOML_DATA: return "Unable to parse data within magik.toml";
-    default: return "Unknown error code";
+        case MGK_SUCCESS: return "No error";
+        case MGK_NO_BUILD_FILE: return "Unable to find magik.toml in current directory";
+        case MGK_UNABLE_TO_PARSE_CONFIG: return "Unable to parse magik.toml";
+        case MGK_UNSUPPORTED_SPEC_VERSION: return "Unsupported magik specification version, valid versions are: 0";
+        case MGK_UNABLE_TO_PARSE_TOML_DATA: return "Unable to parse data within magik.toml";
+        default: return "Unknown error code";
     }
 }

@@ -54,6 +54,17 @@ $(BIN_DIR) $(OBJ_DIR) $(TOMLC99_OBJ_DIR) :
 run : all
 	$(OUTPUT_BIN)
 
+.PHONY : docs
+docs :
+	doxygen
+
+.PHONY : full-clean
+full-clean : clean clean-docs
+
 .PHONY : clean
 clean :
 	rm -rf $(BIN_DIR) $(OBJ_DIR)
+
+.PHONY : clean-docs
+clean-docs :
+	rm -rf html latex

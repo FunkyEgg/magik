@@ -19,18 +19,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* Reads a string property from a toml table
- * v: Value to assign and check
- * t: Toml table
- * s: Key to check for
+/**
+ * @brief Reads a string property from a toml table
+ * 
+ * @param v Value to assign and check
+ * @param t: Toml table
+ * @param s: Key to check for
  */
 #define readPropertyS(v, t, s) v = toml_string_in(t, s); if (!v.ok) return MGK_UNABLE_TO_PARSE_TOML_DATA;
 
-/* Creates a MagikConfig using the given magik.toml files
- * magik_config_path: Path to the magik.toml file
- * config: Pointer to the output config file
- * returns: Magik error corresponding to function success
- */
 MagikError createConfig(char* magik_config_path, MagikConfig* config) {
     char toml_err_buf[200];
 
@@ -49,9 +46,6 @@ MagikError createConfig(char* magik_config_path, MagikConfig* config) {
     return MGK_SUCCESS;
 }
 
-/* Free's the given MagikConfig
- * config: MagikConfig to free
- */
 void freeConfig(MagikConfig* config) {
     free(config);
 }
