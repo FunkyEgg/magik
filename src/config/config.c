@@ -17,6 +17,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include <config/config.h>
 #include <config/macros.h>
@@ -34,28 +35,51 @@ MagikError createConfig(char* magik_config_path, MagikConfig* config) {
     fclose(file);
 
     int error = parseConfig(config, toml_data);
+    toml_free(toml_data);
     if (error != MGK_SUCCESS) { return error; }
 
     return MGK_SUCCESS;
 }
 
-void freeConfig(MagikConfig* config) {
-    free(config);
-}
+void freeConfig(MagikConfig* config) { free(config); }
 
 MagikError parseConfig(MagikConfig* config, toml_table_t* toml_data) {
-    config->data.spec_ver = toml_int_in(toml_data, "spec");
-    if (!config->data.spec_ver.ok) { return MGK_UNABLE_TO_PARSE_TOML_DATA; }
+    readProperty(config->data.spec_ver, int, toml_data, "spec");
     switch (config->data.spec_ver.u.i) {
         case 0: break;
         default: return MGK_UNSUPPORTED_SPEC_VERSION;
     }
 
-    toml_table_t* project_table = toml_table_in(toml_data, "project");
-    if (!project_table) { return MGK_UNABLE_TO_PARSE_TOML_DATA; }
+    readTomlTable(project_table, toml_data, "project");
 
-    readPropertyS(config->data.project.name, project_table, "name");
-    readPropertyS(config->data.project.ver, project_table, "version");
+    readStrProperty(config->data.project.name, project_table, "name");
+    readProperty(config->data.project.ver, string, project_table, "version");
+
+    readArrayProperty(config->data.project.flags, project_table, "flags");
+
+    readStrProperty(config->data.project.src_dir, project_table, "src");
+    readStrProperty(config->data.project.obj_dir, project_table, "obj");
+    readStrProperty(config->data.project.bin_dir, project_table, "bin");
+    readStrProperty(config->data.project.lib_dir, project_table, "lib");
+
+    readOptionalProperty(config->data.project.deps, array, project_table, "deps");
+    if (!config->data.project.deps) {
+        config->data.project.hasDeps = false;
+        
+        toml_free(project_table);
+        return MGK_SUCCESS;
+    }
+
+    // toml_free(project_table);
+    // return MGK_TOO_MANY_DEPS;
+    
+    // config->data.project.hasDeps = true;
+    // for (int i = 0;; i++) {
+    //     if (i < MAGIK_MAX_LIBS) { return MGK_TOO_MANY_LIBS; }
+
+    //     toml_datum_t dep_name = toml_string_at(config->data.project.deps, i);
+
+    // }
 
     toml_free(project_table);
     return MGK_SUCCESS;
