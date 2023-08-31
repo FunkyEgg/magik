@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#include <config.h>
+#include <config/config.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

@@ -14,19 +14,12 @@
  limitations under the License.
  */
 
-#include <config.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-/**
- * @brief Reads a string property from a toml table
- * 
- * @param v Value to assign and check
- * @param t: Toml table
- * @param s: Key to check for
- */
-#define readPropertyS(v, t, s) v = toml_string_in(t, s); if (!v.ok) return MGK_UNABLE_TO_PARSE_TOML_DATA;
+#include <config/config.h>
+#include <config/macros.h>
 
 MagikError createConfig(char* magik_config_path, MagikConfig* config) {
     char toml_err_buf[200];
