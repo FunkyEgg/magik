@@ -4,6 +4,10 @@
 ## Description
 Spec 0 is the spec that magik 0.X.Y will use, it's designed to be the minimum to self host magik and nothing more.
 
+## Notes:
+- Support for only 1 project
+- Only supports C
+
 ## Example file:
 ```toml
 spec = 0
@@ -11,33 +15,32 @@ spec = 0
 [project]
 name = "project_name"
 version = "0.1.0"
-
+flags = ["-Wall", "-Wextra"]
 src = "src"
 obj = "obj"
 bin = "bin"
 lib = "lib"
-
 deps = ["lib1", "lib2"]
 
 [lib1]
-src = "foo" # Relative to library dir
+src = "foo"
 
 [lib2]
-src = "bar" # Relative to library dir
+src = "bar"
+files = ["fizz.c", "buzz.c"]
 ```
 
 ## Keys
-- **spec**: specification version
+- **spec**: Specification version
 - **[project]**
   - **name**: Name of the project
   - **version**: Version string of the project follwing "X.Y.Z" (magor.minor.patch)
+  - **flags**: Flags to pass to the compiler
   - **src**: Source directory
   - **obj**: Object directory
   - **bin**: Binary directory
   - <a name="project_lib">**lib**: Library directory</a>
   - **deps**: Array of all librarys needed
 - [\<libname>]
-  - **src**: Source directory relative to [**[project].lib**](#project_lib)
-
-## Notes:
-- Support for only 1 project
+  - <a name="libname_src">**src**: Source directory relative to [**[project].lib**](#project_lib)</a>
+  - OPTIONAL\<**files**>: Array of files to compile relative to [**[\<libname>].src**](#libname_src)
