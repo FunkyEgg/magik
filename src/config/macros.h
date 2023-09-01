@@ -21,6 +21,12 @@
 #include <mgkerror.h>
 #include <stdlib.h>
 #include <string.h>
+<<<<<<< HEAD
+=======
+
+#define CONCAT(a, b) _innerConcat(a, b)
+#define _innerCONCAT(a, b)  a##b
+>>>>>>> e959ebbb0ae7da958285b321c3eb002ecd9c2cad
 
 /**
  * @brief Reads a mandatory string property in from a toml_table and assigns in to the char* <v> and then free's the memory
@@ -34,7 +40,11 @@
 #define readStrPropertyIn(v, t, k) do { \
         toml_datum_t tmp_data = toml_string_in(t, k); \
         if (!tmp_data.ok) { return MGK_UNABLE_TO_PARSE_TOML_DATA; } \
+<<<<<<< HEAD
         strcpy(v, tmp_data.u.s); \
+=======
+        v = tmp_data.u.s \
+>>>>>>> e959ebbb0ae7da958285b321c3eb002ecd9c2cad
         free(tmp_data.u.s); \
     } while(0)
 
