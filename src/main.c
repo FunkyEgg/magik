@@ -14,7 +14,7 @@
  limitations under the License.
  */
 
-#include <config.h>
+#include <config/config.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -39,6 +39,7 @@ int main (void) {
 
     MagikConfig* config = malloc(sizeof(MagikConfig));
     error = createConfig(strcat(cwd_buf, "/magik.toml"), config);
+    
     if (error != MGK_SUCCESS) {
         printf("Error %i: %s\n", error, getErrorDescFromCode(error));
         return error;

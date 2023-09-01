@@ -40,7 +40,7 @@ files = ["fizz.c", "buzz.c"]
   - **obj**: Object directory
   - **bin**: Binary directory
   - <a name="project_lib">**lib**: Library directory</a>
-  - **deps**: Array of all librarys needed
+  - OPTIONAL\<**deps**>: Array of all librarys needed
 - [\<libname>]
   - <a name="libname_src">**src**: Source directory relative to [**[project].lib**](#project_lib)</a>
   - OPTIONAL\<**files**>: Array of files to compile relative to [**[\<libname>].src**](#libname_src)

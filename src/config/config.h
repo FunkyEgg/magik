@@ -19,6 +19,9 @@
 
 #include <mgkerror.h>
 #include <tomlc99/toml.h>
+#include <stdbool.h>
+
+#define MAGIK_MAX_DEPS 8
 
 /**
  * @brief Struct that contains all config data needed by magik
@@ -26,49 +29,57 @@
 typedef struct {
     char* config_path;
 
-    /**
-     * @brief Struct to define the structure of the toml file
-     */
     struct ConfigData {
-        toml_datum_t spec_ver;
+        int spec_ver;
 
-        /**
-         * @brief Struct to define the structure of the project heading
-         */
-        struct Project {
-            toml_datum_t name;
-            toml_datum_t ver;
+        struct ProjectData {
+            char* name;
+            char* ver;
 
-            toml_datum_t src_dir;
-            toml_datum_t obr_dir;
-            toml_datum_t bin_dir;
+            toml_array_t* flags;
+
+            char* src_dir;
+            char* obj_dir;
+            char* bin_dir;
+            char* lib_dir;
+
+            bool hasDeps;
+            toml_array_t* deps;
         } project;
+
+        struct LibData {
+            char* name;
+            char* src_dir;
+
+            bool hasfiles;
+            char** files;
+        } libs[MAGIK_MAX_DEPS];
     } data;
 } MagikConfig;
 
 /**
- * @brief Creates a MagikConfig from the given toml file:
+ * @brief Creates a MagikConfig from the given toml file
  * 
- * @param magik_config_path The path to magik.toml
- * @param config The config that will be written to
+ * @param magik_config_path char* path to magik.toml
+ * @param config MagikConfig* that will be written to
  * @return MagikError corresponding to the success of the function
  */
 MagikError createConfig(char* magik_config_path, MagikConfig* config);
 
 /**
- * @brief Free's the given MagikConfig:
+ * @brief Free's the given MagikConfig*
  *
  * @param config MagikConfig to free
  */
 void freeConfig(MagikConfig* config);
 
 /**
- * @brief 
+ * @brief Parse the toml_table_t into a MagikConfig
  * 
- * @param config The config that will be written to
- * @param toml_data The base toml_table_t that contains all headings
+ * @param config MagikConfig* that will be written to
+ * @param base_table toml_table_t* to be read from
  * @return MagikError corresponding to the success of the function
  */
-MagikError parseConfig(MagikConfig* config, toml_table_t* toml_data);
+MagikError parseConfig(MagikConfig* config, toml_table_t* base_table);
 
 #endif

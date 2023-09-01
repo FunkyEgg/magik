@@ -3,6 +3,13 @@ spec = 0
 [project]
 name = "magik"
 version = "0.1.0"
+flags = ["-Wall", "-Wextra", "-Isrc", "-Ilib", "-std=c17", "-g"]
 src = "src"
 obj = "obj"
 bin = "bin"
+lib = "lib"
+deps = ["tomlc99"]
+
+[tomlc99]
+src = "tomlc99"
+files = ["tomlc99.c"]

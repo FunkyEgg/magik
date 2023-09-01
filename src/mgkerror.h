@@ -25,14 +25,15 @@ typedef enum {
     MGK_NO_BUILD_FILE,
     MGK_UNABLE_TO_PARSE_CONFIG,
     MGK_UNSUPPORTED_SPEC_VERSION,
-    MGK_UNABLE_TO_PARSE_TOML_DATA
+    MGK_UNABLE_TO_PARSE_TOML_DATA,
+    MGK_TOO_MANY_DEPS,
 } MagikError;
 
 /**
  * @brief Get the error description from a given error code
  * 
- * @param code The error code
- * @return A string error description
+ * @param code int error code
+ * @return char* error description
  */
 char* getErrorDescFromCode(int code);
 
