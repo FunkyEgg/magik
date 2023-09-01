@@ -4,6 +4,10 @@
 #include <tomlc99/toml.h>
 #include <mgkerror.h>
 #include <stdlib.h>
+#include <string.h>
+
+#define CONCAT(a, b) _innerConcat(a, b)
+#define _innerCONCAT(a, b)  a##b
 
 /**
  * @brief Reads a mandatory string property in from a toml_table and assigns in to the char* <v> and then free's the memory
@@ -17,7 +21,7 @@
 #define readStrPropertyIn(v, t, k) { \
         toml_datum_t tmp_data = toml_string_in(t, k); \
         if (!tmp_data.ok) { return MGK_UNABLE_TO_PARSE_TOML_DATA; } \
-        v = tmp_data.u.s; \
+        v = tmp_data.u.s \
         free(tmp_data.u.s); \
     }
 

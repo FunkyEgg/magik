@@ -21,6 +21,7 @@
 
 #include <config/config.h>
 #include <config/macros.h>
+#include <string.h>
 
 MagikError createConfig(char* magik_config_path, MagikConfig* config) {
     char toml_err_buf[200];
