@@ -60,7 +60,7 @@ docs :
 
 .PHONY : gen-cflags
 gen-cflags :
-	rm compile_flags.txt
+	rm -f compile_flags.txt
 	echo $(CFLAGS) | tr " " "\n" > compile_flags.txt
 
 .PHONY : full-clean

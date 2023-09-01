@@ -76,7 +76,6 @@ MagikError parseConfig(MagikConfig* config, toml_table_t* base_table) {
 
     int deps_size = toml_array_nelem(config->data.project.deps);
     if (deps_size > MAGIK_MAX_DEPS) { return MGK_TOO_MANY_DEPS; }
-    return MGK_TOO_MANY_DEPS;
 
     for (int i = 0; i < deps_size; i++) {
         toml_datum_t dep_name = toml_string_at(config->data.project.deps, i);
