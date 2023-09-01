@@ -30,12 +30,11 @@ MagikError createConfig(char* magik_config_path, MagikConfig* config) {
 
     config->config_path = magik_config_path;
 
-    toml_table_t* toml_data = toml_parse_file(file, toml_err_buf, sizeof(toml_err_buf));
-    if (!toml_data) { return MGK_UNABLE_TO_PARSE_CONFIG; }
+    toml_table_t* base_table = toml_parse_file(file, toml_err_buf, sizeof(toml_err_buf));
+    if (!base_table) { return MGK_UNABLE_TO_PARSE_CONFIG; }
     fclose(file);
 
-    int error = parseConfig(config, toml_data);
-    toml_free(toml_data);
+    int error = parseConfig(config, base_table);
     if (error != MGK_SUCCESS) { return error; }
 
     return MGK_SUCCESS;
@@ -43,14 +42,14 @@ MagikError createConfig(char* magik_config_path, MagikConfig* config) {
 
 void freeConfig(MagikConfig* config) { free(config); }
 
-MagikError parseConfig(MagikConfig* config, toml_table_t* toml_data) {
-    readProperty(config->data.spec_ver, int, toml_data, "spec");
-    switch (config->data.spec_ver.u.i) {
+MagikError parseConfig(MagikConfig* config, toml_table_t* base_table) {
+    readIntProperty(config->data.spec_ver, base_table, "spec");
+    switch (config->data.spec_ver) {
         case 0: break;
         default: return MGK_UNSUPPORTED_SPEC_VERSION;
     }
 
-    readTomlTable(project_table, toml_data, "project");
+    readTomlTable(project_table, base_table, "project");
 
     readStrProperty(config->data.project.name, project_table, "name");
     readStrProperty(config->data.project.ver, project_table, "version");

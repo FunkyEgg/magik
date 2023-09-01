@@ -30,7 +30,7 @@ typedef struct {
     char* config_path;
 
     struct ConfigData {
-        toml_datum_t spec_ver;
+        int spec_ver;
 
         struct ProjectData {
             char* name;
@@ -58,28 +58,28 @@ typedef struct {
 } MagikConfig;
 
 /**
- * @brief Creates a MagikConfig from the given toml file:
+ * @brief Creates a MagikConfig from the given toml file
  * 
- * @param magik_config_path The path to magik.toml
- * @param config The config that will be written to
+ * @param magik_config_path char* path to magik.toml
+ * @param config MagikConfig* that will be written to
  * @return MagikError corresponding to the success of the function
  */
 MagikError createConfig(char* magik_config_path, MagikConfig* config);
 
 /**
- * @brief Free's the given MagikConfig:
+ * @brief Free's the given MagikConfig*
  *
  * @param config MagikConfig to free
  */
 void freeConfig(MagikConfig* config);
 
 /**
- * @brief Parse the toml_data into a MagikConfig
+ * @brief Parse the toml_table_t into a MagikConfig
  * 
- * @param config The config that will be written to
- * @param toml_data The base toml_table_t that contains all headings
+ * @param config MagikConfig* that will be written to
+ * @param base_table toml_table_t* to be read from
  * @return MagikError corresponding to the success of the function
  */
-MagikError parseConfig(MagikConfig* config, toml_table_t* toml_data);
+MagikError parseConfig(MagikConfig* config, toml_table_t* base_table);
 
 #endif
