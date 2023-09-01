@@ -52,7 +52,7 @@ typedef struct {
             char* src_dir;
 
             bool hasfiles;
-            char** files;
+            toml_array_t* files;
         } libs[MAGIK_MAX_DEPS];
     } data;
 } MagikConfig;

@@ -16,12 +16,11 @@
 
 #include <mgkerror.h>
 #include <config/config.h>
-#include <string.h>
 
 /**
- * @brief Parses a define macro into an int
+ * @brief Parses a define macro into an int (Macto TO Int)
  * 
- * @param x The deinfe macro
+ * @param x The define macro
  */
 #define MTOI(x) _innerMTOI(x)
 #define _innerMTOI(x) #x
@@ -33,7 +32,9 @@ char* getErrorDescFromCode(int code) {
         case MGK_UNABLE_TO_PARSE_CONFIG: return "Unable to parse magik.toml";
         case MGK_UNSUPPORTED_SPEC_VERSION: return "Unsupported magik specification version, valid versions are: 0";
         case MGK_UNABLE_TO_PARSE_TOML_DATA: return "Unable to parse data within magik.toml";
-        case MGK_TOO_MANY_DEPS: return strcat("Too many dependencies provided in magik.toml, deps must be less than ", MTOI(MAGIK_MAX_DEPS));
+        case MGK_TOO_MANY_DEPS: return "Too many dependencies, max is: " MTOI(MAGIK_MAX_DEPS);
+        case MGK_INVALID_DEP_NAME: return "Invald dependency name in <project.deps> insdie of magik.toml";
+        case MGK_UNABLE_TO_FIND_DEP_TABLE: return "Unable to find the table for the dependency corresponding to the given name"; // TODO: Make this error more understandable
         default: return "Unknown error code";
     }
 }

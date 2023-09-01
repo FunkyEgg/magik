@@ -40,42 +40,63 @@ MagikError createConfig(char* magik_config_path, MagikConfig* config) {
     return MGK_SUCCESS;
 }
 
-void freeConfig(MagikConfig* config) { free(config); }
+void freeConfig(MagikConfig* config) {
+    free(config);
+}
 
 MagikError parseConfig(MagikConfig* config, toml_table_t* base_table) {
-    readIntProperty(config->data.spec_ver, base_table, "spec");
+    readIntPropertyIn(config->data.spec_ver, base_table, "spec");
     switch (config->data.spec_ver) {
         case 0: break;
         default: return MGK_UNSUPPORTED_SPEC_VERSION;
     }
 
-    readTomlTable(project_table, base_table, "project");
+    readTomlTableIn(project_table, base_table, "project");
 
-    readStrProperty(config->data.project.name, project_table, "name");
-    readStrProperty(config->data.project.ver, project_table, "version");
+    readStrPropertyIn(config->data.project.name, project_table, "name");
+    readStrPropertyIn(config->data.project.ver, project_table, "version");
 
-    readArrayProperty(config->data.project.flags, project_table, "flags");
+    readArrayPropertyIn(config->data.project.flags, project_table, "flags");
 
-    readStrProperty(config->data.project.src_dir, project_table, "src");
-    readStrProperty(config->data.project.obj_dir, project_table, "obj");
-    readStrProperty(config->data.project.bin_dir, project_table, "bin");
-    readStrProperty(config->data.project.lib_dir, project_table, "lib");
+    readStrPropertyIn(config->data.project.src_dir, project_table, "src");
+    readStrPropertyIn(config->data.project.obj_dir, project_table, "obj");
+    readStrPropertyIn(config->data.project.bin_dir, project_table, "bin");
+    readStrPropertyIn(config->data.project.lib_dir, project_table, "lib");
 
-    readOptionalProperty(config->data.project.deps, array, project_table, "deps");
+    readOptionalPropertyIn(config->data.project.deps, array, project_table, "deps");
     if (!config->data.project.deps) {
         config->data.project.hasDeps = false;
-        
+
+        free(config->data.project.deps);
         toml_free(project_table);
         return MGK_SUCCESS;
     }
     
-    // config->data.project.hasDeps = true;
-    // for (int i = 0;; i++) {
-    //     if (i < MAGIK_MAX_LIBS) { return MGK_TOO_MANY_LIBS; }
+    config->data.project.hasDeps = true;
 
-    //     toml_datum_t dep_name = toml_string_at(config->data.project.deps, i);
+    int deps_size = toml_array_nelem(config->data.project.deps);
+    if (deps_size > MAGIK_MAX_DEPS) { return MGK_TOO_MANY_DEPS; }
+    return MGK_TOO_MANY_DEPS;
 
-    // }
+    for (int i = 0; i < deps_size; i++) {
+        toml_datum_t dep_name = toml_string_at(config->data.project.deps, i);
+        if (!dep_name.ok) { return MGK_INVALID_DEP_NAME; }
+
+        config->data.libs[i].name = dep_name.u.s;
+        free(dep_name.u.s);
+
+        toml_table_t* dep_table = toml_table_in(base_table, config->data.libs[i].name);
+        if (!dep_table) { return MGK_UNABLE_TO_FIND_DEP_TABLE; }
+
+        readStrPropertyIn(config->data.libs[i].src_dir, dep_table, "src");
+        readOptionalPropertyIn(config->data.libs[i].files, array, dep_table, "files");
+        if (!config->data.libs[i].files) {
+            config->data.libs[i].hasfiles = false;
+            free(config->data.libs[i].files);    
+        }
+
+        toml_free(dep_table);
+    }
 
     toml_free(project_table);
     return MGK_SUCCESS;

@@ -14,9 +14,9 @@
  * 
  * @return MGK_UNABLE_TO_PARSE_TOML_DATA if unable to find key
  */
-#define readStrProperty(v, t, k) { \
+#define readStrPropertyIn(v, t, k) { \
         toml_datum_t tmp_data = toml_string_in(t, k); \
-        if (!tmp_data.ok) { toml_free(t); return MGK_UNABLE_TO_PARSE_TOML_DATA; } \
+        if (!tmp_data.ok) { return MGK_UNABLE_TO_PARSE_TOML_DATA; } \
         v = tmp_data.u.s; \
         free(tmp_data.u.s); \
     }
@@ -30,9 +30,9 @@
  * 
  * @return MGK_UNABLE_TO_PARSE_TOML_DATA if unable to find key
  */
-#define readIntProperty(v, t, k) { \
+#define readIntPropertyIn(v, t, k) { \
         toml_datum_t tmp_data = toml_int_in(t, k); \
-        if (!tmp_data.ok) { toml_free(t); return MGK_UNABLE_TO_PARSE_TOML_DATA; } \
+        if (!tmp_data.ok) { return MGK_UNABLE_TO_PARSE_TOML_DATA; } \
         v = tmp_data.u.i; \
     }
 
@@ -45,7 +45,7 @@
  * 
  * @return MGK_UNABLE_TO_PARSE_TOML_DATA if unable to find key
  */
-#define readArrayProperty(v, t, k) readOptionalProperty(v, array, t, k); if (!v) { toml_free(t); return MGK_UNABLE_TO_PARSE_TOML_DATA; }
+#define readArrayPropertyIn(v, t, k) readOptionalPropertyIn(v, array, t, k); if (!v) { return MGK_UNABLE_TO_PARSE_TOML_DATA; }
 
 /**
  * @brief Reads an optional property of type <j> in from a toml_table
@@ -57,7 +57,7 @@
  * 
  * @return MGK_UNABLE_TO_PARSE_TOML_DATA if unable to find key
  */
-#define readOptionalProperty(v, j, t, k) v = toml_##j##_in(t, k)
+#define readOptionalPropertyIn(v, j, t, k) v = toml_##j##_in(t, k)
 
 /**
  * @brief Gets a toml_table from the root toml_table with automatic error handling
@@ -68,6 +68,6 @@
  * 
  * @return MGK_UNABLE_TO_PARSE_TOML_DATA if unable to find toml_table
  */
-#define readTomlTable(v, t, k) toml_table_t* v = toml_table_in(t, k); if (!v) { return MGK_UNABLE_TO_PARSE_TOML_DATA; }
+#define readTomlTableIn(v, t, k) toml_table_t* v = toml_table_in(t, k); if (!v) { return MGK_UNABLE_TO_PARSE_TOML_DATA; }
 
 #endif
