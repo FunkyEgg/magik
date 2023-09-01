@@ -14,12 +14,12 @@
  * 
  * @return MGK_UNABLE_TO_PARSE_TOML_DATA if unable to find key
  */
-#define readStrProperty(v, t, k) do { \
+#define readStrProperty(v, t, k) { \
         toml_datum_t tmp_data = toml_string_in(t, k); \
         if (!tmp_data.ok) { toml_free(t); return MGK_UNABLE_TO_PARSE_TOML_DATA; } \
         v = tmp_data.u.s; \
         free(tmp_data.u.s); \
-    } while (0)
+    }
 
 /**
  * @brief Reads a mandatory int property from a toml_table
@@ -30,11 +30,11 @@
  * 
  * @return MGK_UNABLE_TO_PARSE_TOML_DATA if unable to find key
  */
-#define readIntProperty(v, t, k) do { \
+#define readIntProperty(v, t, k) { \
         toml_datum_t tmp_data = toml_int_in(t, k); \
         if (!tmp_data.ok) { toml_free(t); return MGK_UNABLE_TO_PARSE_TOML_DATA; } \
         v = tmp_data.u.i; \
-    } while(0)
+    }
 
 /**
  * @brief Reads a mandatory array property in from a toml_table

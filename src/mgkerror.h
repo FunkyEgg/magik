@@ -32,8 +32,8 @@ typedef enum {
 /**
  * @brief Get the error description from a given error code
  * 
- * @param code The error code
- * @return A string error description
+ * @param code int error code
+ * @return char* error description
  */
 char* getErrorDescFromCode(int code);
 

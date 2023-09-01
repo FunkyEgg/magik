@@ -19,17 +19,12 @@
 #include <string.h>
 
 /**
- * @brief Int -> String
+ * @brief Parses a define macro into an int
  * 
- * @param x The int
+ * @param x The deinfe macro
  */
-#define ITOA(x) #x
-/**
- * @brief Defined varible -> String
- * 
- * @param x The deinfed value
- */
-#define DEFTOA(x) ITOA(x)
+#define MTOI(x) _innerMTOI(x)
+#define _innerMTOI(x) #x
 
 char* getErrorDescFromCode(int code) {
     switch (code) {
@@ -38,7 +33,7 @@ char* getErrorDescFromCode(int code) {
         case MGK_UNABLE_TO_PARSE_CONFIG: return "Unable to parse magik.toml";
         case MGK_UNSUPPORTED_SPEC_VERSION: return "Unsupported magik specification version, valid versions are: 0";
         case MGK_UNABLE_TO_PARSE_TOML_DATA: return "Unable to parse data within magik.toml";
-        case MGK_TOO_MANY_DEPS: return strcat("Too many dependencies provided in magik.toml, deps must be less than ", DEFTOA(MAGIK_MAX_DEPS));
+        case MGK_TOO_MANY_DEPS: return strcat("Too many dependencies provided in magik.toml, deps must be less than ", MTOI(MAGIK_MAX_DEPS));
         default: return "Unknown error code";
     }
 }
