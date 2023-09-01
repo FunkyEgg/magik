@@ -53,7 +53,7 @@ MagikError parseConfig(MagikConfig* config, toml_table_t* toml_data) {
     readTomlTable(project_table, toml_data, "project");
 
     readStrProperty(config->data.project.name, project_table, "name");
-    readProperty(config->data.project.ver, string, project_table, "version");
+    readStrProperty(config->data.project.ver, project_table, "version");
 
     readArrayProperty(config->data.project.flags, project_table, "flags");
 
@@ -69,9 +69,6 @@ MagikError parseConfig(MagikConfig* config, toml_table_t* toml_data) {
         toml_free(project_table);
         return MGK_SUCCESS;
     }
-
-    // toml_free(project_table);
-    // return MGK_TOO_MANY_DEPS;
     
     // config->data.project.hasDeps = true;
     // for (int i = 0;; i++) {
