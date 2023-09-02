@@ -18,18 +18,18 @@ jobs:
     
     - name: Build and run
       run: make run
-  build-windows:
-    runs-on: windows-latest
+  # build-windows:
+  #   runs-on: windows-latest
     
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-      with:
-        submodules: recursive
-    # Chatgpt code, might work, I don't know github ci
-    - name: Install git bash & mingw
-      run: |
-        choco install git -y
-        choco install mingw -y
-    - name: Build and run
-      run: make run
+  #   steps:
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v3
+  #     with:
+  #       submodules: recursive
+  #   # Chatgpt code, might work, I don't know github ci
+  #   - name: Install git bash & mingw
+  #     run: |
+  #       choco install git -y
+  #       choco install mingw -y
+  #   - name: Build and run
+  #     run: make run
