@@ -27,7 +27,9 @@ jobs:
       with:
         submodules: recursive
     # Chatgpt code, might work, I don't know github ci
-    - name: Install Git Bash
-      run: choco install git -y
+    - name: Install git bash & mingw
+      run: |
+        choco install git -y
+        choco install mingw -y
     - name: Build and run
       run: make run
