@@ -28,10 +28,6 @@ jobs:
         submodules: recursive
     # Chatgpt code, might work, I don't know github ci
     - name: Install Git Bash
-      run: |
-        choco install git -y
-        echo "##[add-path]$(command -v git)"
-        echo "##[add-path]C:\Program Files\Git\usr\bin"
-        echo "##[add-path]C:\Program Files\Git\mingw64\bin"
+      run: choco install git -y
     - name: Build and run
       run: make run
