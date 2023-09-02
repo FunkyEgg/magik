@@ -14,27 +14,24 @@
  limitations under the License.
  */
 
-#include <mgkdefines.h>
+#ifndef MAGIK_MGKDEFINES_H
+#define MAGIK_MGKDEFINES_H
 
-#include <config/config.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#define MAGIK_MAX_DEPS 8
+#define MAGIK_MAX_VERSION 15 // 0000.0000.0000 + \0
+#define MAGIK_MAX_NAME 32
+#define MAGIK_MAX_PATH 64
 
-int main (void) {
-    int error; // We dump all error codes into this
+#ifdef _WIN32
+    #include <direct.h>
+    #include <Windows.h>
+    #define getcwd _getcwd
+#elif __GLIBC__
+    #include <unistd.h>
+    #include <linux/limits.h>
+    #define MAX_PATH PATH_MAX
+#else
+    #error "Unsupported os/libc"
+#endif
 
-    char cwd_buf[MAX_PATH];
-    getcwd(cwd_buf, sizeof(cwd_buf));
-
-    MagikConfig* config = malloc(sizeof(MagikConfig));
-    error = createConfig(strcat(cwd_buf, "/magik.toml"), config);
-    
-    if (error != MGK_SUCCESS) {
-        printf("Error %i: %s\n", error, getErrorDescFromCode(error));
-        return error;
-    }
-
-    freeConfig(config);
-    return MGK_SUCCESS;
-}
+#endif

@@ -1,3 +1,19 @@
+/*
+ Copyright 2023 FunkyEgg <funkyeggdev@proton.me>
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 #ifndef MAGIK_CONFIG_MACROS_H
 #define MAGIK_CONFIG_MACROS_H
 
@@ -5,9 +21,6 @@
 #include <mgkerror.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define CONCAT(a, b) _innerConcat(a, b)
-#define _innerCONCAT(a, b)  a##b
 
 /**
  * @brief Reads a mandatory string property in from a toml_table and assigns in to the char* <v> and then free's the memory
@@ -18,12 +31,12 @@
  * 
  * @return MGK_UNABLE_TO_PARSE_TOML_DATA if unable to find key
  */
-#define readStrPropertyIn(v, t, k) { \
+#define readStrPropertyIn(v, t, k) do { \
         toml_datum_t tmp_data = toml_string_in(t, k); \
         if (!tmp_data.ok) { return MGK_UNABLE_TO_PARSE_TOML_DATA; } \
-        v = tmp_data.u.s \
+        strcpy(v, tmp_data.u.s); \
         free(tmp_data.u.s); \
-    }
+    } while(0)
 
 /**
  * @brief Reads a mandatory int property from a toml_table
@@ -34,11 +47,11 @@
  * 
  * @return MGK_UNABLE_TO_PARSE_TOML_DATA if unable to find key
  */
-#define readIntPropertyIn(v, t, k) { \
+#define readIntPropertyIn(v, t, k) do { \
         toml_datum_t tmp_data = toml_int_in(t, k); \
         if (!tmp_data.ok) { return MGK_UNABLE_TO_PARSE_TOML_DATA; } \
         v = tmp_data.u.i; \
-    }
+    } while(0)
 
 /**
  * @brief Reads a mandatory array property in from a toml_table

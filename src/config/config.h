@@ -17,11 +17,12 @@
 #ifndef MAGIK_CONFIG_H
 #define MAGIK_CONFIG_H
 
+#include <mgkdefines.h>
+
 #include <mgkerror.h>
+#include <minwindef.h>
 #include <tomlc99/toml.h>
 #include <stdbool.h>
-
-#define MAGIK_MAX_DEPS 8
 
 /**
  * @brief Struct that contains all config data needed by magik
@@ -33,23 +34,27 @@ typedef struct {
         int spec_ver;
 
         struct ProjectData {
-            char* name;
-            char* ver;
+            /*
+            TODO: Ideally we wouldn't need to have a massive struct
+            Ideally we would have pointer to thingos instead or use vectors
+            */
+            char name[MAGIK_MAX_NAME];
+            char ver[MAGIK_MAX_VERSION];
 
             toml_array_t* flags;
 
-            char* src_dir;
-            char* obj_dir;
-            char* bin_dir;
-            char* lib_dir;
+            char src_dir[MAGIK_MAX_PATH];
+            char obj_dir[MAGIK_MAX_PATH];
+            char bin_dir[MAGIK_MAX_PATH];
+            char lib_dir[MAGIK_MAX_PATH];
 
             bool hasDeps;
             toml_array_t* deps;
         } project;
 
         struct LibData {
-            char* name;
-            char* src_dir;
+            char name[MAGIK_MAX_NAME];
+            char src_dir[MAGIK_MAX_PATH];
 
             bool hasfiles;
             toml_array_t* files;

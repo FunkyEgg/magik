@@ -82,7 +82,7 @@ MagikError parseConfig(MagikConfig* config, toml_table_t* base_table) {
         toml_datum_t dep_name = toml_string_at(config->data.project.deps, i);
         if (!dep_name.ok) { return MGK_INVALID_DEP_NAME; }
 
-        config->data.libs[i].name = dep_name.u.s;
+        strcpy(config->data.libs[i].name, dep_name.u.s);
         free(dep_name.u.s);
 
         toml_table_t* dep_table = toml_table_in(base_table, config->data.libs[i].name);
