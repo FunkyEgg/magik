@@ -30,7 +30,8 @@ jobs:
     - name: Install Git Bash
       run: |
         choco install git -y
-        Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
-        refreshenv
+        echo "##[add-path]$(command -v git)"
+        echo "##[add-path]C:\Program Files\Git\usr\bin"
+        echo "##[add-path]C:\Program Files\Git\mingw64\bin"
     - name: Build and run
       run: make run
