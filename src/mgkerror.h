@@ -29,6 +29,7 @@ typedef enum {
     MGK_TOO_MANY_DEPS,
     MGK_INVALID_DEP_NAME,
     MGK_UNABLE_TO_FIND_DEP_TABLE,
+    MGK_INVALID_FILE_NAME,
 } MagikError;
 
 /**

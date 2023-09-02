@@ -64,22 +64,19 @@ MagikError parseConfig(MagikConfig* config, toml_table_t* base_table) {
     readStrPropertyIn(config->data.project.bin_dir, project_table, "bin");
     readStrPropertyIn(config->data.project.lib_dir, project_table, "lib");
 
-    readOptionalPropertyIn(config->data.project.deps, array, project_table, "deps");
-    if (!config->data.project.deps) {
-        config->data.project.hasDeps = false;
+    readOptionalPropertyIn(toml_array_t* deps_arr, array, project_table, "deps");
+    if (!deps_arr) {
+        config->data.project.deps_size = -1;
 
-        free(config->data.project.deps);
         toml_free(project_table);
         return MGK_SUCCESS;
     }
-    
-    config->data.project.hasDeps = true;
 
-    int deps_size = toml_array_nelem(config->data.project.deps);
-    if (deps_size > MAGIK_MAX_DEPS) { return MGK_TOO_MANY_DEPS; }
+    config->data.project.deps_size = toml_array_nelem(deps_arr);
+    if (config->data.project.deps_size > MAGIK_MAX_DEPS) { return MGK_TOO_MANY_DEPS; }
 
-    for (int i = 0; i < deps_size; i++) {
-        toml_datum_t dep_name = toml_string_at(config->data.project.deps, i);
+    for (int i = 0; i < config->data.project.deps_size; i++) {
+        toml_datum_t dep_name = toml_string_at(deps_arr, i);
         if (!dep_name.ok) { return MGK_INVALID_DEP_NAME; }
 
         strcpy(config->data.libs[i].name, dep_name.u.s);
@@ -89,10 +86,19 @@ MagikError parseConfig(MagikConfig* config, toml_table_t* base_table) {
         if (!dep_table) { return MGK_UNABLE_TO_FIND_DEP_TABLE; }
 
         readStrPropertyIn(config->data.libs[i].src_dir, dep_table, "src");
-        readOptionalPropertyIn(config->data.libs[i].files, array, dep_table, "files");
-        if (!config->data.libs[i].files) {
-            config->data.libs[i].hasfiles = false;
-            free(config->data.libs[i].files);    
+        readOptionalPropertyIn(toml_array_t* files_arr, array, dep_table, "files");
+        if (!files_arr) {
+            config->data.libs[i].files_size = -1;
+
+            toml_free(dep_table);
+            continue;
+        }
+
+        config->data.libs[i].files_size = toml_array_nelem(files_arr);
+        for (int j = 0; j < config->data.libs[i].files_size; j++) {
+            toml_datum_t file_name = toml_string_at(files_arr, j);
+            if (!file_name.ok) { return MGK_INVALID_FILE_NAME; }
+            strcpy(config->data.libs[i].files[j], file_name.u.s);
         }
 
         toml_free(dep_table);

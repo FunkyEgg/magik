@@ -21,12 +21,13 @@
 #define MAGIK_MAX_VERSION 15 // 0000.0000.0000 + \0
 #define MAGIK_MAX_NAME 32
 #define MAGIK_MAX_PATH 64
+#define MAGIK_MAX_FILES 64
 
 #ifdef _WIN32
     #include <direct.h>
     #include <Windows.h>
     #define getcwd _getcwd
-#elif __GLIBC__
+#elif __linux__
     #include <unistd.h>
     #include <linux/limits.h>
     #define MAX_PATH PATH_MAX

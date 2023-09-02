@@ -20,7 +20,6 @@
 #include <mgkdefines.h>
 
 #include <mgkerror.h>
-#include <minwindef.h>
 #include <tomlc99/toml.h>
 #include <stdbool.h>
 
@@ -30,14 +29,15 @@
 typedef struct {
     char* config_path;
 
+    /*
+    TODO: Ideally we wouldn't need to have a massive struct (in terms of bytes)
+    Ideally we would have pointer to thingos instead or use vectors
+    A prime examples of this LibData.files
+    */
     struct ConfigData {
         int spec_ver;
 
         struct ProjectData {
-            /*
-            TODO: Ideally we wouldn't need to have a massive struct
-            Ideally we would have pointer to thingos instead or use vectors
-            */
             char name[MAGIK_MAX_NAME];
             char ver[MAGIK_MAX_VERSION];
 
@@ -48,16 +48,15 @@ typedef struct {
             char bin_dir[MAGIK_MAX_PATH];
             char lib_dir[MAGIK_MAX_PATH];
 
-            bool hasDeps;
-            toml_array_t* deps;
+            int deps_size;
         } project;
 
         struct LibData {
             char name[MAGIK_MAX_NAME];
             char src_dir[MAGIK_MAX_PATH];
 
-            bool hasfiles;
-            toml_array_t* files;
+            int files_size;
+            char files[MAGIK_MAX_FILES][MAGIK_MAX_NAME];
         } libs[MAGIK_MAX_DEPS];
     } data;
 } MagikConfig;

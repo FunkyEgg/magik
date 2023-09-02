@@ -35,6 +35,7 @@ char* getErrorDescFromCode(int code) {
         case MGK_TOO_MANY_DEPS: return "Too many dependencies, max is: " MTOI(MAGIK_MAX_DEPS);
         case MGK_INVALID_DEP_NAME: return "Invald dependency name in <project.deps> insdie of magik.toml";
         case MGK_UNABLE_TO_FIND_DEP_TABLE: return "Unable to find the table for the dependency corresponding to the given name"; // TODO: Make this error more understandable
+        case MGK_INVALID_FILE_NAME: return "Invalid file name in magik.toml";
         default: return "Unknown error code";
     }
 }
