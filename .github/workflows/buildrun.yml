@@ -29,7 +29,8 @@ jobs:
     # Chatgpt code, might work, I don't know github ci
     - name: Install Git Bash
       run: |
-        choco install git
+        choco install git -y
+        Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
         refreshenv
     - name: Build and run
       run: make run
