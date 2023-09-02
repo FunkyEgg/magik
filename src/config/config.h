@@ -36,7 +36,7 @@ typedef struct {
         struct ProjectData {
             /*
             TODO: Ideally we wouldn't need to have a massive struct
-            Ideally we would have pointer to thingos instead
+            Ideally we would have pointer to thingos instead or use vectors
             */
             char name[MAGIK_MAX_NAME];
             char ver[MAGIK_MAX_VERSION];
@@ -53,8 +53,8 @@ typedef struct {
         } project;
 
         struct LibData {
-            char* name;
-            char* src_dir[MAGIK_MAX_PATH];
+            char name[MAGIK_MAX_NAME];
+            char src_dir[MAGIK_MAX_PATH];
 
             bool hasfiles;
             toml_array_t* files;
