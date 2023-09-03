@@ -17,24 +17,35 @@
 #include <mgkdefines.h>
 
 #include <config/config.h>
+#include <build/build.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-int main (void) {
-    int error; // We dump all error codes into this
+#define CONCAT(a, b) _inner_CONCAT(a, b)
+#define _inner_CONCAT(a, b) a##b
 
-    char cwd_buf[MAX_PATH];
-    getcwd(cwd_buf, sizeof(cwd_buf));
+int main (void) {
+    int error = MGK_SUCCESS; // We dump all error codes into this
+
+    char config_buf[MAX_PATH];
+    snprintf(config_buf, sizeof(config_buf), "%s%c%s", getcwd(NULL, MAX_PATH), PATH_SEPARATOR, "magik.toml");
 
     MagikConfig* config = malloc(sizeof(MagikConfig));
-    error = createConfig(strcat(cwd_buf, "/magik.toml"), config);
-    
-    if (error != MGK_SUCCESS) {
-        printf("Error %i: %s\n", error, getErrorDescFromCode(error));
-        return error;
-    }
+    error = create_config(config_buf, config);
+    if (error != MGK_SUCCESS) { goto on_error; }
 
-    freeConfig(config);
-    return MGK_SUCCESS;
+    MagikBuildData* build_data = malloc(sizeof(MagikBuildData));
+    error = gather_build_data(config, build_data);
+    if (error != MGK_SUCCESS) { goto on_error; }
+
+    free_build_data(build_data);
+    free_config(config);
+    return error;
+
+on_error:
+    free_config(config);
+
+    printf("Error %i: %s\n", error, get_error_description(error));
+    return error;
 }

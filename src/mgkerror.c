@@ -25,8 +25,9 @@
 #define MTOI(x) _innerMTOI(x)
 #define _innerMTOI(x) #x
 
-char* getErrorDescFromCode(int code) {
+char* get_error_description(int code) {
     switch (code) {
+        case MGK_COMMAND_FAILED: return "Error while running a function";
         case MGK_SUCCESS: return "No error";
         case MGK_NO_BUILD_FILE: return "Unable to find magik.toml in current directory";
         case MGK_UNABLE_TO_PARSE_CONFIG: return "Unable to parse magik.toml";

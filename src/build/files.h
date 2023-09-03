@@ -14,31 +14,11 @@
  limitations under the License.
  */
 
-#ifndef MAGIK_MGKERROR_H
-#define MAGIK_MGKERROR_H
 
-/**
- * @brief Enum that defines all errors magik could return
- */
-typedef enum {
-    MGK_COMMAND_FAILED = -1,
-    MGK_SUCCESS,
-    MGK_NO_BUILD_FILE,
-    MGK_UNABLE_TO_PARSE_CONFIG,
-    MGK_UNSUPPORTED_SPEC_VERSION,
-    MGK_UNABLE_TO_PARSE_TOML_DATA,
-    MGK_TOO_MANY_DEPS,
-    MGK_INVALID_DEP_NAME,
-    MGK_UNABLE_TO_FIND_DEP_TABLE,
-    MGK_INVALID_FILE_NAME,
-} MagikError;
+#ifndef MAGIK_FILES_H
+#define MAGIK_FILES_H
 
-/**
- * @brief Get the error description from a given error code
- * 
- * @param code int error code
- * @return char* error description
- */
-char* get_error_description(int code);
+// TODO: Docs
+void listFiles(char* full_dir_path);
 
 #endif

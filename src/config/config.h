@@ -48,16 +48,16 @@ typedef struct {
             char bin_dir[MAGIK_MAX_PATH];
             char lib_dir[MAGIK_MAX_PATH];
 
-            int deps_size;
+            size_t deps_size;
         } project;
 
         struct LibData {
             char name[MAGIK_MAX_NAME];
             char src_dir[MAGIK_MAX_PATH];
 
-            int files_size;
+            size_t files_size;
             char files[MAGIK_MAX_FILES][MAGIK_MAX_NAME];
-        } libs[MAGIK_MAX_DEPS];
+        } deps[MAGIK_MAX_DEPS];
     } data;
 } MagikConfig;
 
@@ -68,14 +68,14 @@ typedef struct {
  * @param config MagikConfig* that will be written to
  * @return MagikError corresponding to the success of the function
  */
-MagikError createConfig(char* magik_config_path, MagikConfig* config);
+MagikError create_config(char* magik_config_path, MagikConfig* config);
 
 /**
  * @brief Free's the given MagikConfig*
  *
  * @param config MagikConfig to free
  */
-void freeConfig(MagikConfig* config);
+void free_config(MagikConfig* config);
 
 /**
  * @brief Parse the toml_table_t into a MagikConfig
@@ -84,6 +84,6 @@ void freeConfig(MagikConfig* config);
  * @param base_table toml_table_t* to be read from
  * @return MagikError corresponding to the success of the function
  */
-MagikError parseConfig(MagikConfig* config, toml_table_t* base_table);
+MagikError parse_config(MagikConfig* config, toml_table_t* base_table);
 
 #endif
