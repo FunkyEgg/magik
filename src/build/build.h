@@ -26,11 +26,12 @@
  */
 typedef struct {
      char* cc;
-     char cwd[MAX_PATH];
 
      // TODO: Dynamic array or something here too
-     size_t files_size;
-     char files[MAGIK_MAX_FILES][MAGIK_MAX_NAME];
+     size_t c_files_size;
+     char c_files[MAGIK_MAX_FILES][MAGIK_MAX_NAME];
+     size_t header_files_size;
+     char header_files[MAGIK_MAX_FILES][MAGIK_MAX_NAME];
 } MagikBuildData;
 
 

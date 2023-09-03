@@ -18,7 +18,10 @@
 #ifndef MAGIK_FILES_H
 #define MAGIK_FILES_H
 
+#include <mgkerror.h>
+#include <mgkdefines.h>
+
 // TODO: Docs
-void listFiles(char* full_dir_path);
+MagikError list_files(char* dir, char files[MAGIK_MAX_FILES][MAGIK_MAX_NAME], size_t* counter);
 
 #endif

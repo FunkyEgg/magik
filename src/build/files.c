@@ -14,22 +14,20 @@
  limitations under the License.
  */
 
-#include <mgkdefines.h>
-#include <mgkerror.h>
+#include <string.h>
+#include <build/files.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-void listFiles(char* full_dir_path) {
+MagikError list_files(char* full_dir_path, char files[MAGIK_MAX_FILES][MAGIK_MAX_NAME], size_t* counter) {
 #ifdef _WIN32
     char search_path[MAX_PATH];
     snprintf(search_path, sizeof(search_path), "%s\\*", full_dir_path);
+
     WIN32_FIND_DATA file_data;
     HANDLE h_find = FindFirstFile(search_path, &file_data);
-    if (h_find == INVALID_HANDLE_VALUE) {
-        perror("Unable to open directory");
-        exit(EXIT_FAILURE);
-    }
+    if (h_find == INVALID_HANDLE_VALUE) { return MGK_COMMAND_FAILED; }
 
     do {
         if (strcmp(file_data.cFileName, ".") == 0 || strcmp(file_data.cFileName, "..") == 0) { continue; }
@@ -38,13 +36,16 @@ void listFiles(char* full_dir_path) {
         snprintf(file_path, sizeof(file_path), "%s%c%s", full_dir_path, PATH_SEPARATOR, file_data.cFileName);
 
         if (file_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-            listFiles(file_path);
+            list_files(file_path, files, counter);
         } else {
-            printf("File: %s\n", file_path);
+            // printf("File: %s\n", file_path);
+            strcpy(files[*counter], file_path);
+            *counter += 1;
         }
     } while (FindNextFile(h_find, &file_data) != 0);
 
     FindClose(h_find);
+    return MGK_SUCCESS;
 #elif __linux__
     DIR* dir = opendir(full_dir_path);
     if (dir == NULL) {
