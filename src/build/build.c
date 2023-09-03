@@ -32,7 +32,7 @@ MagikError gather_build_data(MagikConfig* config, MagikBuildData* build_data) {
      }
 
      char full_src_dir[MAX_PATH];
-     snprintf(full_src_dir, sizeof(full_src_dir), "%s%c%s%c", build_data->cwd, PATH_SEPARATOR, config->data.project.src_dir, PATH_SEPARATOR);
+     snprintf(full_src_dir, sizeof(full_src_dir), "%s%c%s", build_data->cwd, PATH_SEPARATOR, config->data.project.src_dir);
      printf("%s\n", full_src_dir);
      listFiles(full_src_dir);
 

@@ -22,8 +22,10 @@
 
 void listFiles(char* full_dir_path) {
 #ifdef _WIN32
+    char search_path[MAX_PATH];
+    snprintf(search_path, sizeof(search_path), "%s\\*", full_dir_path);
     WIN32_FIND_DATA file_data;
-    HANDLE h_find = FindFirstFile(strcat(full_dir_path, "\\*"), &file_data);
+    HANDLE h_find = FindFirstFile(search_path, &file_data);
     if (h_find == INVALID_HANDLE_VALUE) {
         perror("Unable to open directory");
         exit(EXIT_FAILURE);
