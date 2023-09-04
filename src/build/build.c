@@ -13,20 +13,25 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  */
+
 #include <mgkdefines.h>
 #include <build/build.h>
-#include <build/files.h>
+#include <misc/get_files.h>
 #include <stddef.h>
 #include <string.h>
 #include <stdlib.h>
 
 /*
 FIXME:
-Currently it doesn't support header files from libs
+Currently it doesn't support gatthering header files from libs, although I aussume they wont chnage much without c files changing
+
+TODO:
+Change build_data to bd
 */
 MagikError gather_build_data(MagikConfig* config, MagikBuildData* build_data) {
      build_data->c_files_size = 0;
      build_data->header_files_size = 0;
+     build_data->cflags = config->data.project.flags;
 
      build_data->cc = (getenv("cc") != NULL) ? getenv("cc") : "cc";
      
@@ -46,7 +51,7 @@ MagikError gather_build_data(MagikConfig* config, MagikBuildData* build_data) {
 
      size_t counter = 0;
      char files_buffer[MAGIK_MAX_FILES][MAGIK_MAX_NAME]; // the *2 assumes for 1 header file per C file
-     int error = list_files(config->data.project.src_dir, files_buffer, &counter);
+     int error = get_files(config->data.project.src_dir, files_buffer, &counter);
      if (error != MGK_SUCCESS) { return error; }
 
      for (size_t i = 0; i < MAGIK_MAX_FILES; i++) {
@@ -62,6 +67,12 @@ MagikError gather_build_data(MagikConfig* config, MagikBuildData* build_data) {
      }
 
      return MGK_SUCCESS;
+}
+
+MagikError build_program(MagikBuildData* bd) {
+     for (size_t i = 0; i < bd->c_files_size; i++) {
+
+     }
 }
 
 void free_build_data(MagikBuildData* bd) { free(bd); }

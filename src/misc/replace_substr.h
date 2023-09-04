@@ -14,14 +14,10 @@
  limitations under the License.
  */
 
+#ifndef MAGIK_REPLACE_SUBSTR_H
+#define MAGIK_REPLACE_SUBSTR_H
 
-#ifndef MAGIK_FILES_H
-#define MAGIK_FILES_H
+// TODO: docs
 
-#include <mgkerror.h>
-#include <mgkdefines.h>
-
-// TODO: Docs
-MagikError list_files(char* dir, char files[MAGIK_MAX_FILES][MAGIK_MAX_NAME], size_t* counter);
 
 #endif

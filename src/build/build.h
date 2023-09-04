@@ -26,6 +26,8 @@
  */
 typedef struct {
      char* cc;
+     // TODO: Change to char**
+     toml_array_t* cflags;
 
      // TODO: Dynamic array or something here
      size_t c_files_size;
