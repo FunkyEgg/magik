@@ -21,7 +21,7 @@
  * @brief Enum that defines all errors magik could return
  */
 typedef enum {
-    MGK_SUCCESS = 0,
+    MGK_SUCCESS,
     MGK_NO_BUILD_FILE,
     MGK_UNABLE_TO_PARSE_CONFIG,
     MGK_UNSUPPORTED_SPEC_VERSION,
@@ -30,6 +30,8 @@ typedef enum {
     MGK_INVALID_DEP_NAME,
     MGK_UNABLE_TO_FIND_DEP_TABLE,
     MGK_INVALID_FILE_NAME,
+    MGK_INVALID_SRC_DIR,
+    MGK_LIST_FILES_FAILED,
 } MagikError;
 
 /**
@@ -38,6 +40,6 @@ typedef enum {
  * @param code int error code
  * @return char* error description
  */
-char* getErrorDescFromCode(int code);
+char* get_error_description(int code);
 
 #endif

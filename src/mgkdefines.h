@@ -19,17 +19,23 @@
 
 #define MAGIK_MAX_DEPS 8
 #define MAGIK_MAX_VERSION 15 // 0000.0000.0000 + \0
-#define MAGIK_MAX_NAME 32
-#define MAGIK_MAX_PATH 64
+#define MAGIK_MAX_NAME 64
+#define MAGIK_MAX_PATH 96
 #define MAGIK_MAX_FILES 64
 
 #ifdef _WIN32
     #include <direct.h>
     #include <Windows.h>
+    #include <windows.h>
+    #define PATH_SEPARATOR '\\'
     #define getcwd _getcwd
 #elif __linux__
     #include <unistd.h>
     #include <linux/limits.h>
+    #include <dirent.h>
+    #include <sys/types.h>
+    #include <sys/stat.h>
+    #define PATH_SEPARATOR '/'
     #define MAX_PATH PATH_MAX
 #else
     #error "Unsupported os/libc"

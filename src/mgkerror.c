@@ -25,7 +25,7 @@
 #define MTOI(x) _innerMTOI(x)
 #define _innerMTOI(x) #x
 
-char* getErrorDescFromCode(int code) {
+char* get_error_description(int code) {
     switch (code) {
         case MGK_SUCCESS: return "No error";
         case MGK_NO_BUILD_FILE: return "Unable to find magik.toml in current directory";
@@ -36,6 +36,8 @@ char* getErrorDescFromCode(int code) {
         case MGK_INVALID_DEP_NAME: return "Invald dependency name in <project.deps> insdie of magik.toml";
         case MGK_UNABLE_TO_FIND_DEP_TABLE: return "Unable to find the table for the dependency corresponding to the given name"; // TODO: Make this error more understandable
         case MGK_INVALID_FILE_NAME: return "Invalid file name in magik.toml";
+        case MGK_INVALID_SRC_DIR: return "Invalid source directory passed to list_files()";
+        case MGK_LIST_FILES_FAILED: return "A os command inside list_files() failed";
         default: return "Unknown error code";
     }
 }
