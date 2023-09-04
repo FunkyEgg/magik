@@ -27,7 +27,7 @@
 typedef struct {
      char* cc;
 
-     // TODO: Dynamic array or something here too
+     // TODO: Dynamic array or something here
      size_t c_files_size;
      char c_files[MAGIK_MAX_FILES][MAGIK_MAX_NAME];
      size_t header_files_size;

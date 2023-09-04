@@ -20,6 +20,10 @@
 #include <string.h>
 #include <stdlib.h>
 
+/*
+FIXME:
+Currently it doesn't support header files from libs
+*/
 MagikError gather_build_data(MagikConfig* config, MagikBuildData* build_data) {
      build_data->c_files_size = 0;
      build_data->header_files_size = 0;
@@ -28,6 +32,13 @@ MagikError gather_build_data(MagikConfig* config, MagikBuildData* build_data) {
      
      for (size_t i = 0; i < config->data.project.deps_size; i++) {
           for (size_t j = 0; j < config->data.deps[i].files_size; j++) {
+               char buffer[MAGIK_MAX_PATH + MAGIK_MAX_NAME];
+               snprintf(
+                    buffer,
+                    sizeof(buffer),
+                    "%s%c%s%c%s",
+                    config->data.project.lib_dir, PATH_SEPARATOR, config->data.deps[i].src_dir, PATH_SEPARATOR, config->data.deps[i].files[j]
+               );
                strcpy(build_data->c_files[build_data->c_files_size], config->data.deps[i].files[j]);
                build_data->c_files_size += 1;
           }

@@ -19,8 +19,8 @@
 
 #define MAGIK_MAX_DEPS 8
 #define MAGIK_MAX_VERSION 15 // 0000.0000.0000 + \0
-#define MAGIK_MAX_NAME 32
-#define MAGIK_MAX_PATH 64
+#define MAGIK_MAX_NAME 64
+#define MAGIK_MAX_PATH 96
 #define MAGIK_MAX_FILES 64
 
 #ifdef _WIN32

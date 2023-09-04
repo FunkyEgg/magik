@@ -30,7 +30,8 @@ typedef struct {
     char* config_path;
 
     /*
-    TODO: Ideally we wouldn't need to have a massive struct (in terms of bytes)
+    TODO:
+    Ideally we wouldn't need to have a massive struct (in terms of bytes)
     Ideally we would have pointer to thingos instead or use vectors
     A prime examples of this LibData.files
     */
