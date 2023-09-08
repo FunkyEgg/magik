@@ -25,9 +25,13 @@
  * @brief All needed build data
  */
 typedef struct {
-     char* cc;
-     // TODO: Change to char**
+     const char* cc;
+     // TODO: Change to char*
      toml_array_t* cflags;
+
+     const char* obj_dir;
+     const char* bin_dir;
+     const char* src_dir;
 
      // TODO: Dynamic array or something here
      size_t c_files_size;
@@ -46,11 +50,15 @@ typedef struct {
  */
 MagikError gather_build_data(MagikConfig* config, MagikBuildData* build_data);
 
+// TODO: Docs
+MagikError build_project(MagikBuildData* bd);
+
 /**
  * @brief Frees a given MagikBuildData*
  * 
  * @param bd MagikBuildData* to free
  */
 void free_build_data(MagikBuildData* bd);
+
 
 #endif

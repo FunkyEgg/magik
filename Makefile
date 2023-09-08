@@ -68,7 +68,7 @@ full-clean : clean clean-docs
 
 .PHONY : clean
 clean :
-	rm -rf $(BIN_DIR) $(OBJ_DIR)
+	rm -rf $(BIN_DIR) $(OBJ_DIR) magik_build
 
 .PHONY : clean-docs
 clean-docs :

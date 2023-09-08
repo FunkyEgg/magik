@@ -4,3 +4,5 @@
 /html/
 /latex/
 /compile_flags.txt
+# Temp dir to seperate magik stuff and make stuff
+/magik_build/

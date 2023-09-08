@@ -1,5 +1,5 @@
 # Magik
-Magik is my dream build system that I can use in my projects
+Magik is a build system for learning that might become something if I put enough time into it
 
 ## Notes
 All the todo's and fixme's are in place due to wanting a working copy of magik before I optimize
