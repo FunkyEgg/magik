@@ -39,6 +39,8 @@ int main (void) {
     error = gather_build_data(config, build_data);
     if (error != MGK_SUCCESS) { goto on_error; }
 
+    build_project(build_data);
+
     free_build_data(build_data);
     free_config(config);
     return error;

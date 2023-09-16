@@ -38,6 +38,8 @@ char* get_error_description(int code) {
         case MGK_INVALID_FILE_NAME: return "Invalid file name in magik.toml";
         case MGK_INVALID_SRC_DIR: return "Invalid source directory passed to list_files()";
         case MGK_LIST_FILES_FAILED: return "A os command inside list_files() failed";
+        case MGK_BUILD_FAILED: return "Failed to build the project";
+        case MGK_BUILD_CREATE_DIR_FAILED: return "Failed to create a directory during the build process";
         default: return "Unknown error code";
     }
 }

@@ -16,12 +16,12 @@
 
 #include "mgkerror.h"
 #include <string.h>
-#include <build/files.h>
+#include <misc/get_files.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-MagikError list_files(char* full_dir_path, char files[MAGIK_MAX_FILES][MAGIK_MAX_NAME], size_t* counter) {
+MagikError get_files(char* full_dir_path, char files[MAGIK_MAX_FILES][MAGIK_MAX_NAME], size_t* counter) {
 #ifdef _WIN32
     char search_path[MAX_PATH];
     snprintf(search_path, sizeof(search_path), "%s\\*", full_dir_path);
@@ -37,7 +37,7 @@ MagikError list_files(char* full_dir_path, char files[MAGIK_MAX_FILES][MAGIK_MAX
         snprintf(file_path, sizeof(file_path), "%s%c%s", full_dir_path, PATH_SEPARATOR, file_data.cFileName);
 
         if (file_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-            list_files(file_path, files, counter);
+            get_files(file_path, files, counter);
         } else {
             strcpy(files[*counter], file_path);
             *counter += 1;
@@ -61,7 +61,7 @@ MagikError list_files(char* full_dir_path, char files[MAGIK_MAX_FILES][MAGIK_MAX
         if (stat(file_path, &file_stat) < 0) { return MGK_LIST_FILES_FAILED; }
 
         if (S_ISDIR(file_stat.st_mode)) {
-            list_files(file_path, files, counter);
+            get_files(file_path, files, counter);
         } else {
             strcpy(files[*counter], file_path);
             *counter += 1;
